@@ -1,0 +1,12 @@
+th,
+td {
+    padding: 3px;
+}
+
+input {
+    margin: 5px;
+}
+
+#comboTable {
+    border-style: solid; border-width: 1px;
+}

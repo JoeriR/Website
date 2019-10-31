@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="dbfzComboTool.css">
+
+    <script src="dbfzComboTool.js"></script>
+</head>
+
+
+<body>
+    <h1>DBFZ Combo Builder Tool_R</h1>
+    <hr /> 
+
+    <div id="comboDiv" style="padding: 5px; margin: 5px; display: inline-block; vertical-align: top;">
+        <h3>Combo Table</h3>
+        <input type="button" onclick="clearComboTable();" value="Clear Combo Table" />
+
+        <table id="comboTable" >
+            <tbody id="comboTableBody">
+                <tr>
+                    <th>Number</th>
+                    <th>Proration</th>
+                    <th>Move</th>
+                    <th>Damage</th>
+                    <th>Scaling</th>
+                    <th>Combo_Dmg</th>
+                    <th></th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="movesDiv" style="display: inline-block; vertical-align: top; width: 300px;">
+        <h3>Moves List</h3>
+        
+        <h4>Ground Normals</h4>
+        <input type="button" onclick="addMove('5L');" value="5L"/>
+        <input type="button" onclick="addMove('5LL');" value="5LL"/>
+        <input type="button" onclick="addMove('5LLL');" value="5LLL"/>
+        <input type="button" onclick="addMove('2L');" value="2L"/>
+        <br />
+        <input type="button" onclick="addMove('5M');" value="5M"/>
+        <input type="button" onclick="addMove('2M');" value="2M"/>
+        <input type="button" onclick="addMove('6M');" value="6M"/>
+        <br />
+        <input type="button" onclick="addMove('5H');" value="5H"/>
+        <input type="button" onclick="addMove('2H');" value="2H"/>
+        <br />
+        <input type="button" onclick="addMove('5S');" value="5S"/>
+
+        <h4>Air Normals</h4>
+        <input type="button" onclick="addMove('j.5L');" value="j.L"/>
+        <input type="button" onclick="addMove('j.5LL');" value="j.LL"/>
+        <input type="button" onclick="addMove('j.5LLL');" value="j.LLL"/>
+        <input type="button" onclick="addMove('j.5LLL (smash)');" value="j.LLL (smash)"/>
+        <br />
+        <input type="button" onclick="addMove('j.5M');" value="j.M"/>
+        <input type="button" onclick="addMove('j.5H');" value="j.H"/>
+        <input type="button" onclick="addMove('j.2H');" value="j.2H"/>
+        <input type="button" onclick="addMove('j.5H (smash)');" value="j.H (smash)"/>
+
+        <br />
+        <hr /> 
+        <h4>Specials</h4>
+        TODO
+        <h4>Universal</h4>
+        TODO: Superdash, Dragon Rush (and its variants), Vanish, Empty Vanish, Spark
+        <h4>Supers</h4>
+        TODO: 236LM, 236HS, 214LM, 214HS, 
+        <h4>Assists</h4>
+        TODO: A1, A2, DHC A1, DHC A2, Half-circle-tag A1 lvl1, Half-circle-tag A1 lvl3, Half-circle-tag A2 lvl1, Half-circle-tag A2 lvl3
+        <h4>Movement</h4>
+        TODO: Dash, Backdash, Microdash, IAD, Airdash, Airbackdash, jc, jump, superjump
+    </div>
+</body>
+
+</html>
