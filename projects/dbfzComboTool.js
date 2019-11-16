@@ -133,7 +133,7 @@ var moves = [
     {
         "id": "superdash",
         "damage": [300],
-        "proration": 2,
+        "proration": 1,     // TODO: create initial proration var?
         "scaleTable": scaleTableLight
     },
 ];
@@ -176,11 +176,11 @@ function redrawTable() {
             }
 
             let scaledDamage = currentHitDamage * currentScaling;
-            scaledDamage = Math.trunc(scaledDamage);    // Turn the floating point into an int, kinda    TODO: Check if this rounding matches the game's rounding
+            scaledDamage = Math.round(scaledDamage);    // Turn the floating point into an int, kinda
 
             comboCurrentDamage += scaledDamage;
 
-            let scalingPercentage = Math.trunc(currentScaling * 100) + "%"
+            let scalingPercentage = Math.round(currentScaling * 100) + "%"
 
             // Create and add new row
             let generatedDeleteButtonContent = "<input type='button' onclick='removeRowFromComboTable(this.parentNode.parentNode.children[0].innerHTML - 1);' value='X'>"
