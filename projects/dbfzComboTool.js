@@ -23,7 +23,7 @@ function init() {
     // Characters and move data are stored in dbfzMoveData.js and these are loaded in on the HTML page after this script
     // These vars can only be initialized after both scripts have been loaded in
     characters = [gokuSsj, Trunks, vegito];
-    currentCharacter = gokuSsj
+    currentCharacter = gokuSsj;
 }
 
 function generateCharacterSelectButtons() {
@@ -42,7 +42,7 @@ function setCharacter(characterName) {
     let character = characters.find(char => char.name == characterName);
 
     if (character === undefined || character === null) {
-        alert("Character not found")
+        alert("Character not found");
         return;
     }
 

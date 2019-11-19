@@ -112,20 +112,6 @@ const defaultMoves = [
         "scaleTable": scaleTableLight // impossible to trigger in-game, so this is actually unknown
     },
 
-    // Specials
-    {
-        "id": "Vegito 236L",
-        "damage": [130, 130, 130, 600],
-        "proration": 2,
-        "scaleTable": scaleTableMedium
-    },
-    {
-        "id": "Vegito 236L (2nd hit only)",
-        "damage": [600],
-        "proration": 1,
-        "scaleTable": scaleTableMedium
-    },
-
     // Universal
     {
         "id": "superdash",
