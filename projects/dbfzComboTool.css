@@ -10,3 +10,39 @@ input {
 #comboTable {
     border-style: solid; border-width: 1px;
 }
+
+.multiHitMove {
+    background-color: #ddd;
+    border-spacing: 0px;
+}
+
+.inSpark {
+    background-color: #f77;
+}
+
+.modifiedNormal {
+    border-color: black;
+    border-width: 1px;
+}
+
+.scaleTableMedium {
+    background-color: lightgreen;
+}
+
+.scaleTableLight {
+    background-color: lightblue;
+}
+
+.scaleTableOverhead {
+    background-color: burlywood;
+}
+
+.scaleTableSixtyPercent {
+    background-color: brown;
+}
+
+.toggleButtonOn {
+    background-color: #aaa;
+    border-color: black;
+    border-width: 1px;
+}
