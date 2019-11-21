@@ -99,14 +99,24 @@ function redrawTable() {
     let scaleTable = moves.find(x => x.id === comboMoveIds[0]).scaleTable;
 
     let comboCurrentDamage = 0;
+
+    let comboIsInSparking = false;
     
     // Loop through each move in the combo and create a new table row for each move
     comboMoveIds.forEach(function(moveId) {
         let move = moves.find(x => x.id === moveId);
         let scaling = 10000; // gigantic init value, meant to be overwritten
 
+        // Handle Sparking Blast
+        if (move.id === "sparking blast" || move.id === "sparking blast (whiff)") {
+            comboIsInSparking = true;
+        }
+        else if (move.id === "sparking blast ends") {
+            comboIsInSparking = false;
+        }
+
         // Pick the current scaling or the last one in the array
-        scaling = calculateScaling(scaleTable, proration);
+        scaling = calculateScaling(scaleTable, proration, comboIsInSparking);
 
         // Loop through every damage value in case of multi-hit moves
         move.damage.forEach(function(currentHitDamage, index) {
@@ -127,25 +137,28 @@ function redrawTable() {
 
             comboCurrentDamage += scaledDamage;
 
-            let scalingPercentage = Math.round(currentScaling * 100) + "%"
+            let scalingPercentage = Math.round(currentScaling * 100) + "%";
 
             // Styling
-            let rowCssClasses = "''";
+            let rowCssClasses = "";
 
             if (index > 0) {
-                rowCssClasses = "multiHitMove";
+                rowCssClasses += "multiHitMove";
+            }
+            if (comboIsInSparking) {
+                rowCssClasses += "inSpark";
             }
 
             // Create and add new row
-            let generatedDeleteButtonContent = "<input type='button' onclick='removeRowFromComboTable(this.parentNode.parentNode.children[0].innerHTML - 1);' value='X'>"
-            let newRowContent = "<tr class=" + rowCssClasses + "> <td style='font-weight: bold;'>" + (moveNumberInCombo + 1) + "</td> <td>" + (proration + 1) + "</td> <td>" + move.id + "</td> <td>" + scaledDamage + "</td> <td>" + scalingPercentage + "</td> <td>" + comboCurrentDamage + "</td> <td>" + generatedDeleteButtonContent + " </tr>"
-            newTableDataContent += newRowContent;            
+            let generatedDeleteButtonContent = "<input type='button' onclick='removeRowFromComboTable(this.parentNode.parentNode.children[0].innerHTML - 1);' value='X'>";
+            let newRowContent = "<tr class=" + rowCssClasses + "> <td style='font-weight: bold;'>" + (moveNumberInCombo + 1) + "</td> <td>" + (proration + 1) + "</td> <td>" + move.id + "</td> <td>" + scaledDamage + "</td> <td>" + scalingPercentage + "</td> <td>" + comboCurrentDamage + "</td> <td>" + generatedDeleteButtonContent + " </tr>";
+            newTableDataContent += newRowContent;
+            
+            // Handle initial proration of combo-starting moves
+            if (index === 0 && move.initialProration !== undefined) {
+                proration += move.initialProration;
+            }
         });
-
-        // Handle initial proration of combo-starting moves
-        if (move.initialProration !== undefined) {
-            proration += move.initialProration;
-        }
 
         proration += move.proration;
         ++moveNumberInCombo;
@@ -171,7 +184,7 @@ function removeRowFromComboTable(rowNumber) {
     }
 }
 
-function calculateScaling(scaleTable, proration) {
+function calculateScaling(scaleTable, proration, comboIsInSparking) {
     let scaling = null;
 
     if (proration < scaleTable.length) {
@@ -179,6 +192,12 @@ function calculateScaling(scaleTable, proration) {
     }
     else {
         scaling = scaleTable[scaleTable.length - 1];
+    }
+
+    // Add 20% damage increase if the combo is in sparking blast
+    // TODO: Check if the '===' is necessary here in JS
+    if (comboIsInSparking === true) {
+        scaling *= 1.2;
     }
 
     return scaling;

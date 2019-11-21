@@ -124,7 +124,25 @@ const defaultMoves = [
         "damage": [850],
         "proration": 5,
         "scaleTable": scaleTableLight
-    }
+    },
+    {
+        "id": "sparking blast",
+        "damage": [0],
+        "proration": 1,
+        "scaleTable": scaleTableLight   // TODO: verify
+    },
+    {
+        "id": "sparking blast (whiff)",
+        "damage": [0],
+        "proration": 0,
+        "scaleTable": null              // TODO: Fix other code so this becomes valid (let the next move decide the scaling table)
+    },
+    {
+        "id": "sparking blast ends",
+        "damage": [0],
+        "proration": 0,
+        "scaleTable": null              // TODO: Fix other code so this becomes valid (let the next move decide the scaling table)
+    },
 ];
 
 
