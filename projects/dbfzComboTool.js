@@ -53,11 +53,41 @@ function setCharacter(characterName) {
     moves = [];
 
     defaultMoves.forEach(move => {
-        let moveButton = "<input type='button' onClick='addMove(\"" + move.id + "\");' value='" + move.id + "' />";
+        let buttonCssClasses = "";
+
+        // Replace default move with a matching modifiedNormal if the character has it
+        if (character.modifiedNormals !== null && character.modifiedNormals !== undefined) {
+            let modifiedNormal = character.modifiedNormals.find(mNormal => mNormal.id === move.id);
+
+            // Null / Undefined check
+            if (modifiedNormal) {
+                move = modifiedNormal;
+                buttonCssClasses += "modifiedNormal";
+
+                console.log("Overwrote default " + move.id + " with " + character.name + "'s version");
+            }
+        }
+
+        let moveButton = "<input class='" + buttonCssClasses + "' type='button' onClick='addMove(\"" + move.id + "\");' value='" + move.id + "' />";
         movesDivContent += moveButton;
 
         moves.push(move);
     });
+
+    // Add unique normals if the character has them
+    if (character.uniqueNormals !== null && character.uniqueNormals !== undefined) {
+        
+        movesDivContent += "<br /><hr />";
+        movesDivContent += "<h4>Unique Normals</h4>";
+
+        character.uniqueNormals.forEach(uniqueNormal => {
+            let moveButton = "<input type='button' onClick='addMove(\"" + uniqueNormal.id + "\");' value='" + uniqueNormal.id + "' />";
+            movesDivContent += moveButton;
+
+            moves.push(uniqueNormal);
+            console.log("Added " + character.name + "'s unique normal: " + uniqueNormal.id);
+        });
+    }
 
     movesDivContent += "<br /><hr />";
     movesDivContent += "<h4>Specials</h4>";

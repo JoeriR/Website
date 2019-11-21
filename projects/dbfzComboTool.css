@@ -19,3 +19,8 @@ input {
 .inSpark {
     background-color: #f77;
 }
+
+.modifiedNormal {
+    border-color: black;
+    border-width: 1px;
+}

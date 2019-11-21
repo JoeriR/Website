@@ -156,7 +156,13 @@ const gokuSsj = {
             "damage": [600],
             "proration": 1,
             "scaleTable": scaleTableLight
-        }, 
+        },
+        {
+            "id": "j.5S",   // TODO: Maybe this should be the default value?
+            "damage": [600],
+            "proration": 1,
+            "scaleTable": scaleTableLight
+        }
     ],
     "specials": [
         {
@@ -294,7 +300,7 @@ const vegito = {
     "modifiedNormals": [
         {
             "id": "5L",
-            "damage": [130, 130, 130, 130],
+            "damage": [120, 120, 120, 120],
             "proration": 1,
             "initialProration": 1,
             "scaleTable": scaleTableLight
@@ -311,11 +317,41 @@ const vegito = {
             "proration": 1,
             "scaleTable": scaleTableLight
         },
+        {
+            "id": "j.5LLL",
+            "damage": [750],
+            "proration": 1,
+            "scaleTable": scaleTableLight
+        },
+        {
+            "id": "j.5LLL (smash)",
+            "damage": [1000], // TODO: Check if it still does 1000 damage in-game
+            "proration": 1,
+            "scaleTable": scaleTableLight // impossible to trigger in-game, so this is actually unknown
+        },
+        {
+            "id": "j.5H",
+            "damage": [750],
+            "proration": 1,
+            "scaleTable": scaleTableLight
+        },
+        {
+            "id": "j.5S",
+            "damage": [500, 500],
+            "proration": 1,
+            "scaleTable": scaleTableLight
+        },
     ],
     "uniqueNormals": [
         {
             "id": "6S",
             "damage": [700],
+            "proration": 1,
+            "scaleTable": scaleTableLight
+        },
+        {
+            "id": "j.2S",
+            "damage": [500, 500],
             "proration": 1,
             "scaleTable": scaleTableLight
         },
@@ -546,7 +582,14 @@ const Trunks = {
             "scaleTable": scaleTableLight
         }
     ],
-    "uniqueNormals": null,
+    "uniqueNormals": [
+        {
+            "id": "j.5S",   // TODO: Maybe this should be the default value?
+            "damage": [600],
+            "proration": 1,
+            "scaleTable": scaleTableLight
+        }
+    ],
     "specials": [
         {
             "id": "236L",
@@ -634,7 +677,7 @@ const Trunks = {
         },
         {
             "id": "214S (far away hit)",
-            "damage": [900],
+            "damage": [900],    // TODO: Verify in-game
             "proration": 1,
             "scaleTable": scaleTableLight
         },
