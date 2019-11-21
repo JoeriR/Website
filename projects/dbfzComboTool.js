@@ -1,6 +1,7 @@
 var scaleTableMedium = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.3, 0.3, 0.3, 0.25, 0.25, 0.25, 0.2, 0.2, 0.2, 0.15];
 var scaleTableLight = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.2, 0.2, 0.2, 0.15, 0.15, 0.15, 0.1];
 var scaleTableOverhead = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1];
+var scaleTableSixtyPercent = [0.01, 0.01] // TODO: Figure out what the values for this table are, either online or in-game
 
 // Default content, used for reset purposes, is set in init()
 var defaultMovesDivContent = null;
@@ -16,6 +17,8 @@ var comboMoveIds = [];
 var comboTableHeaderData = "<tr> <th>Number</th> <th>Proration</th> <th>Move</th> <th>Damage</th> <th>Scaling</th> <th>Combo_Dmg</th> </tr>";
 
 var uniqueTableRowId = 0;
+
+var doHighlightScaling = false;
 
 function init() {
     defaultMovesDivContent = document.getElementById("movesDiv").innerHTML;
@@ -46,14 +49,22 @@ function setCharacter(characterName) {
         return;
     }
 
+    // Update currentCharacter var
+    currentCharacter = character;
+
     // Rebuild the movesDiv with moves from the selected character, while also rebuilding the moves array
-    let movesDivContent = "<h3>Moves List</h3>";
+    let movesDivContent = "<h3>Moves List - " + character.name + "</h3>";
     movesDivContent += "<h4>Universal Normals</h4>";
 
     moves = [];
 
     defaultMoves.forEach(move => {
         let buttonCssClasses = "";
+
+        // Change the style of the button to represent it's scaling if the toggle for this is set
+        if (doHighlightScaling === true) {
+            buttonCssClasses += getScalingStyleClass(move);
+        }
 
         // Replace default move with a matching modifiedNormal if the character has it
         if (character.modifiedNormals !== null && character.modifiedNormals !== undefined) {
@@ -62,7 +73,7 @@ function setCharacter(characterName) {
             // Null / Undefined check
             if (modifiedNormal) {
                 move = modifiedNormal;
-                buttonCssClasses += "modifiedNormal";
+                buttonCssClasses += " modifiedNormal";
 
                 console.log("Overwrote default " + move.id + " with " + character.name + "'s version");
             }
@@ -81,7 +92,14 @@ function setCharacter(characterName) {
         movesDivContent += "<h4>Unique Normals</h4>";
 
         character.uniqueNormals.forEach(uniqueNormal => {
-            let moveButton = "<input type='button' onClick='addMove(\"" + uniqueNormal.id + "\");' value='" + uniqueNormal.id + "' />";
+            let buttonCssClasses = "";
+
+            // Change the style of the button to represent it's scaling if the toggle for this is set
+            if (doHighlightScaling === true) {
+                buttonCssClasses += getScalingStyleClass(uniqueNormal);
+            }
+
+            let moveButton = "<input type='button' class='" + buttonCssClasses + "' onClick='addMove(\"" + uniqueNormal.id + "\");' value='" + uniqueNormal.id + "' />";
             movesDivContent += moveButton;
 
             moves.push(uniqueNormal);
@@ -95,7 +113,14 @@ function setCharacter(characterName) {
     // Grounded specials
     character.specials.forEach(special => {
         if (!special.id.includes("j.")) {
-            let moveButton = "<input type='button' onClick='addMove(\"" + special.id.split("/")[0] + "\");' value='" + special.id + "' />";
+            let buttonCssClasses = "";
+
+            // Change the style of the button to represent it's scaling if the toggle for this is set
+            if (doHighlightScaling === true) {
+                buttonCssClasses += getScalingStyleClass(special);
+            }
+
+            let moveButton = "<input type='button' class='" + buttonCssClasses + "' onClick='addMove(\"" + special.id.split("/")[0] + "\");' value='" + special.id + "' />";
             movesDivContent += moveButton;
 
             moves.push(special);
@@ -105,7 +130,14 @@ function setCharacter(characterName) {
     // Aerial specials
     character.specials.forEach(special => {
         if (special.id.includes("j.")) {
-            let moveButton = "<input type='button' onClick='addMove(\"" + special.id.split("/")[1] + "\");' value='" + special.id + "' />";
+            let buttonCssClasses = "";
+
+            // Change the style of the button to represent it's scaling if the toggle for this is set
+            if (doHighlightScaling === true) {
+                buttonCssClasses += getScalingStyleClass(special);
+            }
+
+            let moveButton = "<input type='button' class='" + buttonCssClasses + "' onClick='addMove(\"" + special.id.split("/")[1] + "\");' value='" + special.id + "' />";
             movesDivContent += moveButton;
 
             moves.push(special);
@@ -183,12 +215,12 @@ function redrawTable() {
             let generatedDeleteButtonContent = "<input type='button' onclick='removeRowFromComboTable(this.parentNode.parentNode.children[0].innerHTML - 1);' value='X'>";
             let newRowContent = "<tr class=" + rowCssClasses + "> <td style='font-weight: bold;'>" + (moveNumberInCombo + 1) + "</td> <td>" + (proration + 1) + "</td> <td>" + move.id + "</td> <td>" + scaledDamage + "</td> <td>" + scalingPercentage + "</td> <td>" + comboCurrentDamage + "</td> <td>" + generatedDeleteButtonContent + " </tr>";
             newTableDataContent += newRowContent;
-            
-            // Handle initial proration of combo-starting moves
-            if (index === 0 && move.initialProration !== undefined) {
-                proration += move.initialProration;
-            }
         });
+
+        // Handle initial proration of combo-starting moves
+        if (move.initialProration !== undefined) {
+            proration += move.initialProration;
+        }
 
         proration += move.proration;
         ++moveNumberInCombo;
@@ -231,4 +263,36 @@ function calculateScaling(scaleTable, proration, comboIsInSparking) {
     }
 
     return scaling;
+}
+
+function toggleMoveScalingHighlighting() {
+    doHighlightScaling = !doHighlightScaling    // The actual toggle
+
+    // Recreate the comboMoves div if a character has been selected
+    if (characters.find(char => char === currentCharacter)) {
+        setCharacter(currentCharacter.name);
+    }
+
+    // Update the toggle button's style
+    if (doHighlightScaling) {
+        document.getElementById("toggleMoveScalingHighlightButton").className = "toggleButtonOn";
+    }
+    else {
+        document.getElementById("toggleMoveScalingHighlightButton").className = "";
+    }
+}
+
+function getScalingStyleClass(move) {
+    if (move.scaleTable === scaleTableMedium) {
+        return "scaleTableMedium";
+    }
+    else if (move.scaleTable === scaleTableLight) {
+        return "scaleTableLight";
+    }
+    else if (move.scaleTable === scaleTableOverhead) {
+        return "scaleTableOverhead";
+    }
+    else if (move.scaleTable === scaleTableSixtyPercent) {
+        return "scaleTableSixtyPercent";
+    }
 }
