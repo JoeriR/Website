@@ -120,7 +120,7 @@ function setCharacter(characterName) {
                 buttonCssClasses += getScalingStyleClass(special);
             }
 
-            let moveButton = "<input type='button' class='" + buttonCssClasses + "' onClick='addMove(\"" + special.id.split("/")[0] + "\");' value='" + special.id + "' />";
+            let moveButton = "<input type='button' class='" + buttonCssClasses + "' onClick='addMove(\"" + special.id + "\");' value='" + special.id + "' />";
             movesDivContent += moveButton;
 
             moves.push(special);
@@ -137,7 +137,7 @@ function setCharacter(characterName) {
                 buttonCssClasses += getScalingStyleClass(special);
             }
 
-            let moveButton = "<input type='button' class='" + buttonCssClasses + "' onClick='addMove(\"" + special.id.split("/")[1] + "\");' value='" + special.id + "' />";
+            let moveButton = "<input type='button' class='" + buttonCssClasses + "' onClick='addMove(\"" + special.id + "\");' value='" + special.id + "' />";
             movesDivContent += moveButton;
 
             moves.push(special);
