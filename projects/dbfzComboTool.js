@@ -169,6 +169,11 @@ function redrawTable() {
         let move = moves.find(x => x.id === moveId);
         let scaling = 10000; // gigantic init value, meant to be overwritten
 
+        // Reselect the scalingTable if the last move had no scaling table
+        if (scaleTable === null || scaleTable === undefined) {
+            scaleTable = moves.find(x => x.id === moveId).scaleTable;
+        }
+
         // Handle Sparking Blast
         if (move.id === "sparking blast" || move.id === "sparking blast (whiff)") {
             comboIsInSparking = true;
@@ -187,10 +192,10 @@ function redrawTable() {
             if (index > 0) {
                 // Handle initial proration of combo-starting moves (the initial proration also applies to multi-hit attacks, like Adult Gohan's 5L)
                 if (move.initialProration !== undefined) {
-                    currentScaling = calculateScaling(scaleTable, proration + move.initialProration);
+                    currentScaling = calculateScaling(scaleTable, proration + 1 + move.initialProration, comboIsInSparking);
                 }
                 else {
-                    currentScaling = calculateScaling(scaleTable, proration + 1);
+                    currentScaling = calculateScaling(scaleTable, proration + 1, comboIsInSparking);
                 }
             }
 
@@ -247,6 +252,11 @@ function removeRowFromComboTable(rowNumber) {
 }
 
 function calculateScaling(scaleTable, proration, comboIsInSparking) {
+    // Prevent this function from executing if the scaleTable has not been set, default to 100% scaling
+    if (scaleTable === null || scaleTable === undefined) {
+        return 1.0;
+    }
+
     let scaling = null;
 
     if (proration < scaleTable.length) {
