@@ -59,6 +59,7 @@ const defaultMoves = [
         "id": "6M",
         "damage": [850],
         "proration": 1,
+        "initialProration": 2,
         "scaleTable": scaleTableOverhead
     },
 
@@ -288,9 +289,9 @@ const gokuSsj = {
         },
     ],
     "assist": {
-        "id": "Goku SSJ assist",
-        "damage": [800]  // TODO: Verify in-game
-    }
+        "id": "Goku SSJ assist (5 hits)",
+        "damage": [200, 200, 200, 200, 200] // Raw damage: 760
+    },
 };
 
 
@@ -560,7 +561,23 @@ const vegito = {
     ],
     "assist": {
         "id": "Vegito assist (5 hits)",
-        "damage": [1000]  // TODO: Verify in-game
+        "damage": [300, 300, 300, 300, 300] // Raw damage: 1140
+    },
+    "assist": {
+        "id": "Vegito assist (4 hits)",
+        "damage": [300, 300, 300, 300]      // Raw damage: 930
+    },
+    "assist": {
+        "id": "Vegito assist (3 hits)",
+        "damage": [300, 300, 300]           // Raw damage: 720
+    },
+    "assist": {
+        "id": "Vegito assist (2 hits)",
+        "damage": [300, 300]                // Raw damage: 510
+    },
+    "assist": {
+        "id": "Vegito assist (1 hit)",
+        "damage": [300]
     }
 };
 
@@ -696,6 +713,6 @@ const Trunks = {
     ],
     "assist": {
         "id": "Trunks assist",
-        "damage": [800]  // TODO: Verify in-game
+        "damage": [800]
     }
 };
