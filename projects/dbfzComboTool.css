@@ -20,6 +20,12 @@ input {
     background-color: #f77;
 }
 
+/* This is a combination of .multiHitMove and .inSpark */
+.multiHitMoveinSpark {
+    background-color: #eaa;
+    border-spacing: 0px;
+}
+
 .modifiedNormal {
     border-color: black;
     border-width: 1px;
